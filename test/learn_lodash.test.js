@@ -76,8 +76,44 @@ describe("test/learn_lodash.test.js", function () {
     });
   });
 
-  describe('#Collections', function () {
+  describe('Collections', function () {
+    it('#contains', function () {
+      _.contains([1, 2, 3], 1)
+        .should.be.true;
 
+      _.contains([1, 2, 3], [1, 2])
+        .should.be.true;
+
+      _.contains([1, 2, 3], 1, 2)
+        .should.be.false;
+
+      _.contains({ 'name': 'fred', 'age': 40 }, 'fred')
+        .should.be.true;
+
+      _.contains('pebbles', 'eb')
+        .should.be.true;
+    });
+    it('#pluck', function () {
+      var characters = [
+        { 'name': 'barney', 'age': 36 },
+        { 'name': 'fred',   'age': 40 }
+      ];
+
+      _.pluck(characters, 'name')
+        .should.eql(['barney', 'fred']);
+    });
+
+    it('#where', function () {
+      var characters = [
+        { 'name': 'barney', 'age': 36, 'pets': ['hoppy'] },
+        { 'name': 'fred',   'age': 40, 'pets': ['baby puss', 'dino'] }
+      ];
+
+      _.where(characters, { 'age': 36 })
+        .should.eql([{ 'name': 'barney', 'age': 36, 'pets': ['hoppy'] }]);
+
+      _.where(characters, { 'pets': ['dino'] })
+        .should.eql([{ 'name': 'fred', 'age': 40, 'pets': ['baby puss', 'dino'] }]);
+    });
   });
-
 });
