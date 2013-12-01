@@ -16,7 +16,7 @@ describe("test/learn_lodash.test.js", function () {
 
     describe('#difference', function () {
       it('should be differenced', function () {
-        _.difference([1, 2, 3, 4, 5], [5, 2, 10]).should.eql([1, 3, 4]);
+        _.difference([1, 2, 3, 4, 5], [5, 2, 10], [1]).should.eql([3, 4]);
       });
     });
 
@@ -115,6 +115,98 @@ describe("test/learn_lodash.test.js", function () {
       return num > 1;
     })
     .should.eql([1]);
+  });
+
+  it('#intersection', function () {
+    _.intersection([1, 2, 3], [5, 2, 1, 4], [2, 1])
+    .should.eql([1, 2]);
+  });
+
+  it('#last', function () {
+    _.last([1, 2, 3])
+    .should.equal(3);
+
+    _.last([1, 2, 3], 2)
+    .should.eql([2, 3]);
+
+    _.last([1, 2, 3], function(num) {
+      return num > 1;
+    })
+    .should.eql([2, 3]);
+  });
+
+  it('#lastIndexOf', function () {
+    _.lastIndexOf([1, 2, 3, 1, 2, 3], 2)
+    .should.equal(4);
+
+    _.lastIndexOf([1, 2, 3, 1, 2, 3], 2, 3)
+    .should.equal(1);
+  });
+
+  it('#pull', function () {
+    var array = [1, 2, 3, 1, 2, 3];
+    _.pull(array, 2, 3)
+    .should.eql([1, 1]);
+  });
+
+  it('#range', function () {
+    _.range(4).should.eql([0, 1, 2, 3]);
+
+    _.range(1, 5).should.eql([1, 2, 3, 4]);
+
+    _.range(0, 20, 5).should.eql([0, 5, 10, 15]);
+
+    _.range(0, -4, -1).should.eql([0, -1, -2, -3]);
+
+    _.range(0).should.eql([]);
+  });
+
+  it('#remove', function () {
+    var array = [1, 2, 3, 4, 5, 6];
+    var evens = _.remove(array, function(num) { return num % 2 === 0; });
+
+    array.should.eql([1, 3, 5]);
+
+    evens.should.eql([2, 4, 6]);
+  });
+
+  it('#rest', function () {
+    _.rest([1, 2, 3])
+    .should.eql([2, 3]);
+
+    _.rest([1, 2, 3], 2).should.eql([3]);
+
+    _.rest([1, 2, 3], function(num) {
+      return num < 3;
+    }).should.eql([3]);
+  });
+
+  it('#sortedIndex', function () {
+    _.sortedIndex([20, 30, 50], 40)
+    .should.equal(2);
+  });
+
+  it('#union', function () {
+    _.union([1, 2, 3], [5, 2, 1, 4], [2, 1])
+    .should.eql([1, 2, 3, 5, 4]);
+  });
+
+  it('#uniq', function () {
+    _.uniq([1, 2, 1, 3, 1])
+    .should.eql([1, 2, 3]);
+
+    _.uniq([1, 1, 2, 2, 3], true)
+    .should.eql([1, 2, 3]);
+
+    _.uniq(['A', 'b', 'C', 'a', 'B', 'c'], function(letter) { return letter.toLowerCase(); })
+    .should.eql(['A', 'b', 'C']);
+
+    _.uniq([1, 2.5, 3, 1.5, 2, 3.5], (function(num) { return this.floor(num); }.bind(Math)))
+    .should.eql([1, 2.5, 3]);
+
+    // using "_.pluck" callback shorthand
+    _.uniq([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x')
+    .should.eql([{ 'x': 1 }, { 'x': 2 }]);
   });
 
   describe('Collections', function () {
