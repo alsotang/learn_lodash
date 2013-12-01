@@ -316,6 +316,14 @@ describe("test/learn_lodash.test.js", function () {
 
 
 
+    it('#invoke', function () {
+      _.invoke([[5, 1, 7], [3, 2, 1]], 'sort')
+      .should.eql([[1, 5, 7], [1, 2, 3]]);
+
+      _.invoke([123, 456], String.prototype.split, '')
+      .should.eql([['1', '2', '3'], ['4', '5', '6']]);
+    });
+
     it('#pluck', function () {
       var characters = [
         { 'name': 'barney', 'age': 36 },
@@ -344,6 +352,57 @@ describe("test/learn_lodash.test.js", function () {
 
       _.where(characters, { 'pets': ['dino'] })
         .should.eql([{ 'name': 'fred', 'age': 40, 'pets': ['baby puss', 'dino'] }]);
+    });
+  });
+
+  describe('Functions', function () {
+    it('#after', function () {
+      var fn = function (name) {
+        return 'hello, ' + name;
+      };
+      fn = _.after(3, fn);
+      should(fn('world')).equal(undefined);
+      should(fn('world')).equal(undefined);
+      should(fn('world')).equal('hello, world');
+      should(fn('world')).equal('hello, world');
+
+      var person = {
+        sayHi: function (name) {
+          return 'Hi! ' + name;
+        }
+      };
+      sayHi = _.after(3, person.sayHi, person);
+      should(sayHi('world')).equal(undefined);
+      should(sayHi('world')).equal(undefined);
+      should(sayHi('world')).equal('Hi! world');
+      should(sayHi('world')).equal('Hi! world');
+    });
+
+    it('#curry', function () {
+      var curried = _.curry(function(a, b, c) {
+        return a + b + c;
+      });
+
+      curried(1)(2)(3)
+      .should.equal(6);
+
+      curried(1, 2)(3)
+      .should.equal(6);
+
+      curried(1, 2, 3)
+      .should.equal(6);
+    });
+  });
+
+  describe('Objects', function () {
+    it('#invert', function () {
+      _.invert({ 'first': 'fred', 'second': 'barney' })
+      .should.eql({ 'fred': 'first', 'barney': 'second' });
+    });
+
+    it('#mapValues', function () {
+      _.mapValues({ 'a': 1, 'b': 2, 'c': 3} , function(num) { return num * 3; })
+      .should.eql({ 'a': 3, 'b': 6, 'c': 9 });
     });
   });
 });
