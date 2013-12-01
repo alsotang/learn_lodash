@@ -74,6 +74,47 @@ describe("test/learn_lodash.test.js", function () {
       _.pluck(_.first(characters, { 'employer': 'slate' }), 'name')
         .should.eql(['barney', 'fred']);
     });
+
+    it('#flatten', function () {
+      _.flatten([1, [2], [3, [[4]]]])
+        .should.eql([1, 2, 3, 4]);
+
+      _.flatten([1, [2], [3, [[4]]]], 0)
+        .should.eql([1, [2], [3, [[4]]]]);
+
+      _.flatten([1, [2], [3, [[4]]]], 1)
+        .should.eql([1, 2, 3, [[4]]]);
+
+      _.flatten([1, [2], [3, [[4]]]], 2)
+        .should.eql([1, 2, 3, [4]]);
+
+      _.flatten([1, [2], [3, [[4]]]], true)
+        .should.eql([1, 2, 3, [[4]]]);
+    });
+  });
+
+  it('#indexOf', function () {
+    _.indexOf([1, 2, 3, 1, 2, 3], 2)
+      .should.equal(1);
+
+    _.indexOf([1, 2, 3, 1, 2, 3], 2, 3)
+      .should.equal(4);
+
+    _.indexOf([1, 1, 2, 2, 3, 3], 2, true)
+      .should.equal(2);
+  });
+
+  it('#initial', function () {
+    _.initial([1, 2, 3])
+    .should.eql([1, 2]);
+
+    _.initial([1, 2, 3], 2)
+    .should.eql([1]);
+
+    _.initial([1, 2, 3], function(num) {
+      return num > 1;
+    })
+    .should.eql([1]);
   });
 
   describe('Collections', function () {
