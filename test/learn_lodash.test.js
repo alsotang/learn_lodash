@@ -209,7 +209,45 @@ describe("test/learn_lodash.test.js", function () {
     .should.eql([{ 'x': 1 }, { 'x': 2 }]);
   });
 
+  it('#without', function () {
+    _.without([1, 2, 1, 0, 3, 1, 4], 0, 1)
+    .should.eql([2, 3, 4]);
+  });
+
+  it('#xor', function () {
+    _.xor([1, 2, 3], [5, 2, 1, 4])
+    .should.eql([3, 5, 4]);
+
+    _.xor([1, 2, 5], [2, 3, 5], [3, 4, 5])
+    .should.eql([1, 4, 5]);
+  });
+
+  it('#zip', function () {
+    _.zip(['fred', 'barney'], [30, 40], [true, false])
+    .should.eql([['fred', 30, true], ['barney', 40, false]]);
+
+    _.zip(['fred', 'barney'], [30, 40, 50], [true, false])
+    .should.eql([['fred', 30, true], ['barney', 40, false]]);
+  });
+
+  it('#zipObject', function () {
+    _.zipObject(['fred', 'barney'], [30, 40])
+    .should.eql({ 'fred': 30, 'barney': 40 });
+
+    _.zipObject(['fred', 'barney'], [30, 40, 50, 60])
+    .should.eql({ 'fred': 30, 'barney': 40 });
+  });
+
   describe('Collections', function () {
+    it('#at', function () {
+      _.at(['a', 'b', 'c', 'd', 'e'], [0, 2, 4])
+      .should.eql(['a', 'c', 'e']);
+
+    _.at(['fred', 'barney', 'pebbles'], 0, 2)
+    .should.eql(['fred', 'pebbles']);
+    });
+
+
     it('#contains', function () {
       _.contains([1, 2, 3], 1)
         .should.be.true;
@@ -234,6 +272,13 @@ describe("test/learn_lodash.test.js", function () {
 
       _.pluck(characters, 'name')
         .should.eql(['barney', 'fred']);
+    });
+
+    it('#toArray', function () {
+      (function() {
+        return _.toArray(arguments).slice(1);
+      })(1, 2, 3, 4)
+      .should.eql([2, 3, 4]);
     });
 
     it('#where', function () {
