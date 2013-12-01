@@ -264,6 +264,58 @@ describe("test/learn_lodash.test.js", function () {
       _.contains('pebbles', 'eb')
         .should.be.true;
     });
+
+    it('#countBy', function () {
+      _.countBy([4.3, 6.1, 6.4], function(num) { return Math.floor(num); })
+      .should.eql({ '4': 1, '6': 2 });
+
+      _.countBy(['one', 'two', 'three'], 'length')
+      .should.eql({ '3': 2, '5': 1 });
+    });
+
+    it('#every', function () {
+      _.every([true, 1, null, 'yes'])
+      .should.be.false;
+
+      _.every([1, 2, 3, 4, 5,], function (item) {
+        return item > 0;
+      })
+      .should.be.true;
+
+      _.every([1, 2, 3, 4, 5, -1], function (item) {
+        return item > 0;
+      })
+      .should.be.false;
+    });
+
+    it('#filter', function () {
+      var evens = _.filter([1, 2, 3, 4, 5, 6], function(num) { return num % 2 == 0; })
+      .should.eql([2, 4, 6]);
+    });
+
+    it('#find', function () {
+      var characters = [
+        { 'name': 'barney',  'age': 36, 'blocked': false },
+        { 'name': 'fred',    'age': 40, 'blocked': true },
+        { 'name': 'pebbles', 'age': 1,  'blocked': false }
+      ];
+
+      _.find(characters, function(chr) {
+        return chr.age < 40;
+      });
+    });
+
+    it('#findLast', function () {
+      _.findLast([1, 2, 3, 4], function(num) {
+        return num % 2 == 1;
+      })
+      .should.eql([3, 1]);
+    });
+
+
+
+
+
     it('#pluck', function () {
       var characters = [
         { 'name': 'barney', 'age': 36 },
